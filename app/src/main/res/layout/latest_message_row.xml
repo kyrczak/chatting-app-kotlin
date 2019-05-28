@@ -8,7 +8,7 @@
     <ImageView
             android:layout_width="64dp"
             android:layout_height="64dp" app:srcCompat="@android:drawable/btn_star_big_on"
-            android:id="@+id/imageView2"
+            android:id="@+id/imageview_latestmessage"
             app:layout_constraintStart_toStartOf="parent"
             android:layout_marginStart="24dp" android:layout_marginTop="8dp" app:layout_constraintTop_toTopOf="parent"
             android:layout_marginBottom="8dp" app:layout_constraintBottom_toBottomOf="parent"/>
@@ -16,15 +16,15 @@
             android:text="TextView"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:id="@+id/textView" app:layout_constraintStart_toEndOf="@id/imageView2"
+            android:id="@+id/username_textview" app:layout_constraintStart_toEndOf="@id/imageview_latestmessage"
             android:layout_marginStart="16dp" app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toTopOf="@+id/textView2"/>
+            app:layout_constraintBottom_toTopOf="@+id/latestmessage_textview" android:textStyle="bold"/>
     <TextView
             android:text="Latest Message"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:id="@+id/textView2" app:layout_constraintStart_toEndOf="@id/imageView2"
+            android:id="@+id/latestmessage_textview" app:layout_constraintStart_toEndOf="@id/imageview_latestmessage"
             android:layout_marginStart="16dp" app:layout_constraintEnd_toEndOf="parent" android:layout_marginEnd="8dp"
-            app:layout_constraintBottom_toBottomOf="parent" app:layout_constraintTop_toBottomOf="@+id/textView"
+            app:layout_constraintBottom_toBottomOf="parent" app:layout_constraintTop_toBottomOf="@+id/username_textview"
             app:layout_constraintHorizontal_bias="0.5"/>
 </android.support.constraint.ConstraintLayout>

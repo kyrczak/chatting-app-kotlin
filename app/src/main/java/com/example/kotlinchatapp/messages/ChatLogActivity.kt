@@ -84,7 +84,6 @@ class ChatLogActivity : AppCompatActivity() {
         if(fromId==null) return
         val user = intent.getParcelableExtra<User>(NewMessageActivity.USER_KEY)
         val toId = user.uid
-//        val ref = FirebaseDatabase.getInstance().getReference("/messages").push()
         val ref = FirebaseDatabase.getInstance().getReference("/user-messages/$fromId/$toId").push()
         val toRef = FirebaseDatabase.getInstance().getReference("/user-messages/$toId/$fromId").push()
 
@@ -96,6 +95,10 @@ class ChatLogActivity : AppCompatActivity() {
         toRef.setValue(chatMessage)
         edittext_chatlog.text.clear()
         chatlog_recyclerview.scrollToPosition(adapter.itemCount - 1)
+        val latestMessageReference = FirebaseDatabase.getInstance().getReference("/latest-messages/$fromId/$toId")
+        latestMessageReference.setValue(chatMessage)
+        val latestMessageToReference = FirebaseDatabase.getInstance().getReference("/latest-messages/$toId/$fromId")
+        latestMessageToReference.setValue(chatMessage)
     }
 }
 class ChatItemLeft(val text: String, val user: User): Item<ViewHolder>(){
