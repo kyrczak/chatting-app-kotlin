@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.util.Log
 import com.example.kotlinchatapp.R
 import com.example.kotlinchatapp.models.User
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
@@ -40,8 +41,10 @@ class NewMessageActivity : AppCompatActivity() {
                 p0.children.forEach {
                     Log.d("NewMessage", it.toString())
                     val user = it.getValue(User::class.java)
-                    if(user != null)
-                    adapter.add(UserItem(user))
+                    if(user?.uid != FirebaseAuth.getInstance().uid){
+                        if(user != null)
+                            adapter.add(UserItem(user))
+                    }
                 }
                 adapter.setOnItemClickListener { item, view ->
                     val userItem = item as UserItem

@@ -6,19 +6,20 @@
 
     <TextView
             android:maxWidth="240dp"
-            android:text="This is a very long message that is stretching from one side to the other while not destroying the app"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/textViewLeft"
-            app:layout_constraintStart_toEndOf="@+id/imageView2" android:layout_marginStart="8dp"
+            app:layout_constraintStart_toEndOf="@+id/imageView_left" android:layout_marginStart="8dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             android:background="@drawable/rounded_edittext"
             android:padding="16dp" android:layout_marginTop="8dp"/>
-    <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" app:srcCompat="@android:drawable/btn_star_big_on"
-            android:id="@+id/imageView2"
+    <de.hdodenhof.circleimageview.CircleImageView
+            android:layout_width="60dp"
+            android:layout_height="60dp" app:srcCompat="@android:drawable/btn_star_big_on"
+            android:id="@+id/imageView_left"
+            app:civ_border_width="2dp"
+            app:civ_border_color="@android:color/black"
             app:layout_constraintTop_toTopOf="parent" app:layout_constraintStart_toStartOf="parent"
             android:layout_marginTop="8dp" android:layout_marginStart="8dp"/>
 </android.support.constraint.ConstraintLayout>
