@@ -41,6 +41,7 @@ class ChatLogActivity : AppCompatActivity() {
         }
     }
     private fun listenForMessages(){
+
         val fromId = FirebaseAuth.getInstance().uid
         val toId = toUser?.uid
         val ref = FirebaseDatabase.getInstance().getReference("/user-messages/$fromId/$toId")
@@ -58,6 +59,7 @@ class ChatLogActivity : AppCompatActivity() {
 
 
                 }
+                chatlog_recyclerview.scrollToPosition(adapter.itemCount-1)
             }
 
             override fun onCancelled(p0: DatabaseError) {

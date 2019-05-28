@@ -3,11 +3,13 @@ package com.example.kotlinchatapp.messages
 import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.support.v7.widget.DividerItemDecoration
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import com.example.kotlinchatapp.R
 import com.example.kotlinchatapp.models.ChatMessage
+import com.example.kotlinchatapp.models.LatestMessageRow
 import com.example.kotlinchatapp.models.User
 import com.example.kotlinchatapp.registerlogin.RegisterActivity
 import com.google.firebase.auth.FirebaseAuth
@@ -19,6 +21,7 @@ import com.xwray.groupie.Item
 import com.xwray.groupie.ViewHolder
 import kotlinx.android.synthetic.main.activity_latest_messages.*
 import kotlinx.android.synthetic.main.latest_message_row.view.*
+import kotlinx.android.synthetic.main.user_row_newmessage.view.*
 
 class LatestMessagesActivity : AppCompatActivity() {
     companion object{
@@ -29,40 +32,18 @@ class LatestMessagesActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_latest_messages)
         recyclerview_latestmessages.adapter = adapter
+        recyclerview_latestmessages.addItemDecoration(DividerItemDecoration(this, DividerItemDecoration.VERTICAL))
+        adapter.setOnItemClickListener { item, view ->
+            val intent = Intent(this,ChatLogActivity::class.java)
+            val row = item as LatestMessageRow
+            intent.putExtra(NewMessageActivity.USER_KEY,row.ChatPartnerUser)
+            startActivity(intent)
+        }
         listenForLatestMessages()
         fetchCurrentUser()
         verifyUserIsLoggedIn()
     }
-    class LatestMessageRow(val chatMessage: ChatMessage): Item<ViewHolder>(){
-        override fun getLayout(): Int {
-            return R.layout.latest_message_row
-        }
-        override fun bind(viewHolder: ViewHolder, position: Int) {
-            viewHolder.itemView.latestmessage_textview.text = chatMessage.text
-            Log.d("messageActivity","From user ${chatMessage.fromId}")
-            val chatPartnerId: String
-            if(chatMessage.fromId == FirebaseAuth.getInstance().uid){
-                chatPartnerId = chatMessage.ToId
-                Log.d("messageActivity","Nie gówno From user $chatPartnerId")
-            }else{
-                chatPartnerId = chatMessage.fromId
-                Log.d("messageActivity","Gówno From user $chatPartnerId")
-            }
-            val ref = FirebaseDatabase.getInstance().getReference("/user/$chatPartnerId")
-            ref.addListenerForSingleValueEvent(object : ValueEventListener{
-                override fun onDataChange(p0: DataSnapshot) {
-                    val user = p0.getValue(User::class.java)
-                    viewHolder.itemView.username_textview.text = user?.username
-                }
 
-                override fun onCancelled(p0: DatabaseError) {
-
-                }
-            })
-
-        }
-
-    }
     val latestMessagesMap = HashMap<String, ChatMessage>()
     private fun refreshRecyclerViewMessages(){
         adapter.clear()
